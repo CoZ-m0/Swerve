@@ -14,7 +14,7 @@ import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 /**
@@ -35,6 +35,20 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+        AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+                                                                         () ->
+                                                                             MathUtil.applyDeadband(m_driverController.getLeftY(),
+                                                                                                    OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
+                                                                         () -> MathUtil.applyDeadband(m_driverController.getLeftX(),
+                                                                                                      OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
+                                                                         () -> m_driverController.getRightX());
+    TeleopDrive closedFieldRel = new TeleopDrive(
+        drivebase,
+        () -> MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
+        () -> MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
+        () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
+        () -> false);
+    drivebase.setDefaultCommand(closedFieldAbsoluteDrive);
   }
 
   /**
@@ -47,20 +61,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-                                                                         () ->
-                                                                             MathUtil.applyDeadband(m_driverController.getLeftY(),
-                                                                                                    OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
-                                                                         () -> MathUtil.applyDeadband(m_driverController.getLeftX(),
-                                                                                                      OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
-                                                                         () -> m_driverController.getRawAxis(2));
-    TeleopDrive closedFieldRel = new TeleopDrive(
-        drivebase,
-        () -> MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
-        () -> MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
-        () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
-        () -> false);
-    drivebase.setDefaultCommand(closedFieldAbsoluteDrive);
+    m_driverController.a().onTrue((new InstantCommand(drivebase::zeroGyro)));
   }
 
   /**

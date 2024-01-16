@@ -61,7 +61,7 @@ public class SwerveSubsystem extends SubsystemBase
     System.out.println("}");
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
     try
     {
     //   swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
@@ -130,9 +130,6 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putBoolean("front right encoder issue?", swerveDrive.getModules()[1].getAbsoluteEncoderReadIssue());
-    SmartDashboard.putNumber("front right encoder relative position", swerveDrive.getModules()[1].getRelativePosition());
-    SmartDashboard.putNumber("front right encoder abs position", swerveDrive.getModules()[1].getAbsolutePosition());
   }
 
   @Override
