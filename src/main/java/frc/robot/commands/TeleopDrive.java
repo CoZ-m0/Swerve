@@ -59,11 +59,12 @@ public class TeleopDrive extends Command
     SmartDashboard.putNumber("vX", xVelocity);
     SmartDashboard.putNumber("vY", yVelocity);
     SmartDashboard.putNumber("omega", angVelocity);
+    SmartDashboard.putBoolean("fieldOriented", driveMode.getAsBoolean());
 
     // Drive using raw values.
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
                  angVelocity * controller.config.maxAngularVelocity,
-                 driveMode);
+                 driveMode.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.

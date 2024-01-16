@@ -33,7 +33,7 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+      new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -61,9 +61,9 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
-        () -> m_driverController.getLeftY(),
-        () -> m_driverController.getLeftX(),
-        () -> -m_driverController.getRightX(), 
+        () -> MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
+        () -> MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
+        () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
         () -> false);
     drivebase.setDefaultCommand(closedFieldRel);
   }
