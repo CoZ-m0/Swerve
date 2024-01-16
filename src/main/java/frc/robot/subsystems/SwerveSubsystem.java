@@ -12,9 +12,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.io.File;
+import java.util.Arrays;
+
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
@@ -127,6 +130,9 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    Arrays.stream(this.swerveDrive.getModules()).forEach((module) -> {
+      SmartDashboard.putNumber(module.toString(), module.getAbsolutePosition());
+    });
   }
 
   @Override
