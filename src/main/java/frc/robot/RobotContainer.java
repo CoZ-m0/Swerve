@@ -48,7 +48,7 @@ public class RobotContainer {
         () -> MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
         () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
         () -> false);
-    drivebase.setDefaultCommand(closedFieldAbsoluteDrive);
+    drivebase.setDefaultCommand(closedFieldRel);
   }
 
   /**
