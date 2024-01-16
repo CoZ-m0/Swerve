@@ -130,9 +130,9 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    Arrays.stream(this.swerveDrive.getModules()).forEach((module) -> {
-      SmartDashboard.putNumber(module.toString(), module.getAbsolutePosition());
-    });
+    SmartDashboard.putBoolean("front right encoder issue?", swerveDrive.getModules()[1].getAbsoluteEncoderReadIssue());
+    SmartDashboard.putNumber("front right encoder relative position", swerveDrive.getModules()[1].getRelativePosition());
+    SmartDashboard.putNumber("front right encoder abs position", swerveDrive.getModules()[1].getAbsolutePosition());
   }
 
   @Override
