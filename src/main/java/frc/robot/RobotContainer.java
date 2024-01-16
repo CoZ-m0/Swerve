@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AbsoluteFieldDrive;
 import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -46,13 +47,20 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+                                                                         () ->
+                                                                             MathUtil.applyDeadband(m_driverController.getLeftY(),
+                                                                                                    OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
+                                                                         () -> MathUtil.applyDeadband(m_driverController.getLeftX(),
+                                                                                                      OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
+                                                                         () -> m_driverController.getRawAxis(2));
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
         () -> MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
         () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
         () -> false);
-    drivebase.setDefaultCommand(closedFieldRel);
+    drivebase.setDefaultCommand(closedFieldAbsoluteDrive);
   }
 
   /**
