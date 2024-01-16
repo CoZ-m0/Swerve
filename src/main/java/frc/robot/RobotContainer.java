@@ -41,7 +41,7 @@ public class RobotContainer {
                                                                                                     OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
                                                                          () -> MathUtil.applyDeadband(m_driverController.getLeftX(),
                                                                                                       OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X),
-                                                                         () -> m_driverController.getRightX());
+                                                                         () -> -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_X));
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVER_CONTROLLER_DEADBAND_Y),
