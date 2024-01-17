@@ -61,7 +61,7 @@ public class SwerveSubsystem extends SubsystemBase
     System.out.println("}");
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
     //   swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
@@ -101,6 +101,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void drive(Translation2d translation, double rotation, boolean fieldRelative)
   {
+    System.out.println("Back Right: " + swerveDrive.getModules()[3].getAngleMotor().getVelocity());
     swerveDrive.drive(translation,
                       rotation,
                       fieldRelative,
