@@ -19,7 +19,7 @@
     "drive": 0
   },
   "encoder": {
-    "type": "analog",
+    "type": "ma3",
     "id": 0,
     "canbus": null
   },
