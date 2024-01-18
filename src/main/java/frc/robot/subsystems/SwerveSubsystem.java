@@ -101,7 +101,6 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void drive(Translation2d translation, double rotation, boolean fieldRelative)
   {
-    System.out.println("Back Right: " + swerveDrive.getModules()[3].getAngleMotor().getVelocity());
     swerveDrive.drive(translation,
                       rotation,
                       fieldRelative,
